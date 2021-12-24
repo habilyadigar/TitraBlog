@@ -13,6 +13,7 @@ const postSchema = new mongoose.Schema(
     title: { type: String, required: true },
     content: { type: String, required: true },
     pic: { type: String, required: true },
+    category: { type: String, required: true },
     reviews: [reviewSchema],
   },
   { timestamps: true }
