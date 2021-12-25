@@ -1,12 +1,14 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Post from "./Post";
-import { fetchPosts } from "../actions/postActions";
-import Loader from "./Loader";
-import { useColorModeValue, Box, Wrap, Flex } from "@chakra-ui/react";
+/* eslint-disable */
 
-export default function PostsList() {
-  const listPost = useSelector((state) => state.posts);
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Post from './Post';
+import { fetchPosts } from '../actions/post';
+import Loader from './Loader';
+import { useColorModeValue, Box, Wrap, Flex } from '@chakra-ui/react';
+
+const PostsList = () => {
+  const listPost = useSelector(state => state.posts);
   const { posts, loading, error } = listPost;
 
   const dispatch = useDispatch();
@@ -16,7 +18,7 @@ export default function PostsList() {
 
   return (
     <Flex
-      bg={useColorModeValue("#F9FAFB", "gray.600")}
+      bg={useColorModeValue('#F9FAFB', 'gray.600')}
       px={5}
       py={30}
       w="full"
@@ -29,12 +31,12 @@ export default function PostsList() {
         {loading ? (
           <Loader />
         ) : posts?.length > 0 ? (
-          posts?.map((post) => (
+          posts?.map(post => (
             <Box
               mx="auto"
               rounded="lg"
               shadow="md"
-              bg={("white", "gray.800")}
+              bg={('white', 'gray.800')}
               maxW="md"
               key={post?._id}
               boxShadow="dark-lg"
@@ -43,9 +45,11 @@ export default function PostsList() {
             </Box>
           ))
         ) : (
-          "Blog not found!"
+          'Blog not found!'
         )}
       </Wrap>
     </Flex>
   );
-}
+};
+
+export default PostsList;

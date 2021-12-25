@@ -1,22 +1,28 @@
-import "./App.css";
-import React from "react";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import Header from "./components/Header";
-import Home from "./components/Home";
-import PostsList from "./components/PostList";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import './App.css';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import PostsList from './components/PostsList';
+import PostDetails from './pages/PostDetails';
+import Header from './components/Header';
+import Home from './pages/Home';
+import { Login } from './pages/Login';
 
 function App() {
   return (
-    <BrowserRouter>
+    <>
       <ToastContainer autoClose={3000} />
-      <Header />
-      <Routes>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/posts" component={PostsList} />
-      </Routes>
-    </BrowserRouter>
+      <Router>
+        <Header />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/posts" component={PostsList} />
+          <Route exact path="/posts/:id" component={PostDetails} />
+          <Route exact path="/login" component={Login} />
+          <Redirect to="/" />
+        </Switch>
+      </Router>
+    </>
   );
 }
 

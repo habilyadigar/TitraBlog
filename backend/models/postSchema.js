@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Review = require("../models/reviewSchema");
 
 const reviewSchema = new mongoose.Schema(
   {
@@ -11,8 +10,9 @@ const reviewSchema = new mongoose.Schema(
 const postSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
+    subititle: { type: String, required: true },
     content: { type: String, required: true },
-    pic: { type: String, required: true },
+    image: { type: String, required: true },
     category: { type: String, required: true },
     reviews: [reviewSchema],
   },

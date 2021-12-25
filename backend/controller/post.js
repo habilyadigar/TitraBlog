@@ -1,19 +1,28 @@
-const Task = require("../models/postSchema");
+const Post = require("../models/postSchema");
 
-const myPosts = async (req, res) => {
+const getPosts = async (req, res) => {
   try {
-    const tasks = await Task.find();
-    res.send(200, tasks);
+    const posts = await Post.find();
+    res.send(200, posts);
   } catch (error) {
     res.send(404, "Post Not Found");
   }
 };
 
-const create = async (req, res) => {
-  const task = new Task(req.body);
+const postWithId = async (req, res) => {
   try {
-    await task.save();
-    res.status(201).send(task);
+    const post = await Post.findById(req.params.id);
+    res.send(post);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+};
+
+const create = async (req, res) => {
+  const post = new Post(req.body);
+  try {
+    await post.save();
+    res.status(201).send(post);
   } catch (error) {
     res.status(400).send(error);
   }
@@ -21,11 +30,11 @@ const create = async (req, res) => {
 
 const update = async (req, res) => {
   try {
-    const task = await Task.findByIdAndUpdate(req.params.id, req.body, {
+    const post = await Post.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,
     });
-    res.send(task);
+    res.send(post);
   } catch (error) {
     res.status(400).send(error);
   }
@@ -33,16 +42,17 @@ const update = async (req, res) => {
 
 const deletePost = async (req, res) => {
   try {
-    const task = await Task.findByIdAndDelete(req.params.id);
-    res.send(task);
+    const post = await Post.findByIdAndDelete(req.params.id);
+    res.send(post);
   } catch (error) {
     res.status(400).send(error);
   }
 };
 
 module.exports = {
-  myPosts,
   create,
   update,
   deletePost,
+  postWithId,
+  getPosts,
 };
