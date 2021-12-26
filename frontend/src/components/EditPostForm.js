@@ -3,7 +3,7 @@ import FileBase64 from 'react-file-base64';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { useForm, Controller } from 'react-hook-form';
-import { updatePost } from '../actions/post';
+import { updatePost } from '../actions/postActions';
 import { Textarea, Box, Flex, Heading, Select } from '@chakra-ui/react';
 import { FormControl, FormLabel } from '@chakra-ui/form-control';
 import { Button } from '@chakra-ui/button';

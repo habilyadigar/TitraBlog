@@ -10,9 +10,10 @@ const reviewSchema = new mongoose.Schema(
 const postSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
-    subititle: { type: String, required: true },
+    subtitle: { type: String, required: true },
+    author: { type: String, required: true },
     content: { type: String, required: true },
-    image: { type: String, required: true },
+    image: { type: String },
     category: { type: String, required: true },
     reviews: [reviewSchema],
   },

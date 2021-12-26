@@ -1,11 +1,6 @@
 import * as types from '../constants/PostConstants';
 
-const initialState = {
-  posts: [],
-  currentPost: null,
-};
-
-const postReducer = (state = initialState, action) => {
+const postReducer = (state = { loading: true }, action) => {
   switch (action.type) {
     case types.FETCH_POSTS_REQUEST:
       return {

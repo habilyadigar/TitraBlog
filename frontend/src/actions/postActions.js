@@ -1,5 +1,8 @@
 import * as types from '../constants/PostConstants';
-import * as api from '../api';
+import * as api from '../api/postApi';
+import Axios from 'axios';
+
+const API_ENDPOINT = 'http://localhost:3000/api/post';
 
 export const fetchPosts = () => async dispatch => {
   try {
@@ -21,16 +24,26 @@ export const fetchSinglePost = id => async dispatch => {
   }
 };
 
-export const createPost = post => async dispatch => {
+export const createPost = post => async (dispatch, getState) => {
+  dispatch({ type: types.CREATE_POST_REQUEST, payload: post });
+  const {
+    userLogin: { userInfo },
+  } = getState();
+
   try {
-    dispatch({ type: types.CREATE_POST_REQUEST, payload: post });
-    const { data } = await api.createPost(post);
+    const { data } = await Axios.post(API_ENDPOINT, post, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
+    console.log(data);
     dispatch({
       type: types.CREATE_POST_SUCCESS,
       payload: data,
     });
   } catch (error) {
-    dispatch({ type: types.CREATE_POST_FAIL, payload: error.message });
+    dispatch({
+      type: types.CREATE_POST_FAIL,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+    });
   }
 };
 

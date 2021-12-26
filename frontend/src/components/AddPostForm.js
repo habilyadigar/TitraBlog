@@ -18,7 +18,7 @@ import { Button } from '@chakra-ui/button';
 import { Input } from '@chakra-ui/input';
 import { FormControl, FormLabel } from '@chakra-ui/form-control';
 
-import { createPost } from '../actions/post';
+import { createPost } from '../actions/postActions';
 
 const categories = ['Frontend', 'Backend', 'Mobile', 'React', 'Vue', 'JavaScript', 'Fun', 'Gaming'];
 
@@ -112,7 +112,7 @@ const AddPostForm = ({ isOpen, onClose }) => {
                     ))}
                   </Select>
                 }
-                name="tag"
+                name="category"
                 control={control}
                 defaultValue={categories[0]}
               />

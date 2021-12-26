@@ -1,14 +1,13 @@
 /* eslint-disable */
-
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Post from './Post';
-import { fetchPosts } from '../actions/post';
+import { fetchPosts } from '../actions/postActions';
 import Loader from './Loader';
 import { useColorModeValue, Box, Wrap, Flex } from '@chakra-ui/react';
 
 const PostsList = () => {
-  const listPost = useSelector(state => state.posts);
+  const listPost = useSelector(state => state.post);
   const { posts, loading, error } = listPost;
 
   const dispatch = useDispatch();
