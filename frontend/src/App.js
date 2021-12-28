@@ -8,6 +8,7 @@ import Header from './components/Header';
 import Home from './pages/HomePage';
 import { Register } from './pages/RegisterPage';
 import { Login } from './pages/LoginPage';
+import ProfilePage from './pages/ProfilePage';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route exact path="/posts/:id" component={PostDetails} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
+          <Route exact path="/profile" component={ProfilePage} />
           <Redirect to="/" />
         </Switch>
       </Router>

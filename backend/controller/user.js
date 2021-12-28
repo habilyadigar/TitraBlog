@@ -42,9 +42,7 @@ const register = async (req, res) => {
 
 const getUser = async (req, res) => {
   try {
-    const user = await User.findOne({
-      where: { id: req.params.id },
-    });
+    const user = await User.findById(req.params.id);
     res.status(200).send(user);
   } catch (error) {
     res.status(404).send("User not found");
@@ -65,9 +63,7 @@ const getUserPosts = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  const user = await User.findOne({
-    where: { id: req.user.id },
-  });
+  const user = await User.findById(req.user._id);
   if (user) {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;

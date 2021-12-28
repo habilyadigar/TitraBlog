@@ -12,6 +12,6 @@ router.post("/register", register);
 router.post("/login", login);
 router.get("/:id", Auth, getUser);
 router.get("/", Auth, getUserPosts);
-router.patch("/profile", Auth, updateUser);
+router.patch("/", Auth, updateUser);
 
 module.exports = router;

@@ -81,3 +81,25 @@ export const deletePost = id => async (dispatch, getState) => {
     dispatch({ type: types.DELETE_POST_FAIL, payload: error.message });
   }
 };
+
+export const createComment = (postId, review) => async (dispatch, getState) => {
+  dispatch({ type: types.COMMENT_POST_REQUEST });
+  const {
+    userLogin: { userInfo },
+  } = getState();
+
+  try {
+    const { data } = await Axios.post(`${API_ENDPOINT}/${postId}/reviews`, review, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
+    dispatch({
+      type: types.COMMENT_POST_SUCCESS,
+      payload: data.review,
+    });
+  } catch (error) {
+    dispatch({
+      type: types.COMMENT_POST_FAIL,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+    });
+  }
+};

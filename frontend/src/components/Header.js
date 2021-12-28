@@ -4,7 +4,6 @@ import { chakra, useColorModeValue, Flex, Button, Link, Portal } from '@chakra-u
 import Logo from '../images/Logo';
 import AddPostForm from './AddPostForm';
 import { useDisclosure } from '@chakra-ui/hooks';
-//import { Login } from './../pages/Login';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../actions/userActions';
 import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
@@ -59,9 +58,9 @@ const Header = () => {
                 </MenuButton>
                 <Portal>
                   <MenuList>
-                    <MenuItem>
-                      <Link to="#profile">Profile</Link>
-                    </MenuItem>
+                    <Link href={'/profile'}>
+                      <MenuItem>Profile</MenuItem>
+                    </Link>
                     <Link to="#logout" onClick={logoutHandler}>
                       <MenuItem>LogOut</MenuItem>
                     </Link>

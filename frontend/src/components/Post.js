@@ -52,7 +52,7 @@ const Post = ({ post }) => {
           <Flex alignItems="center">
             <Flex alignItems="center" justify="between">
               <Image h={10} fit="cover" rounded="full" src="https://source.unsplash.com/random/48x48" alt="Avatar" />
-              <Link mx={2} fontWeight="bold" color={useColorModeValue('gray.700', 'gray.200')}>
+              <Link mx={5} fontWeight="bold" color={useColorModeValue('gray.700', 'gray.200')}>
                 {post.author}
               </Link>
             </Flex>

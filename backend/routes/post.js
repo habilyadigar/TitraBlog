@@ -6,6 +6,7 @@ const {
   deletePost,
   getPosts,
   postWithId,
+  comment,
 } = require("../controller/post");
 const Auth = require("../middleware/Auth");
 
@@ -15,5 +16,6 @@ router.get("/myposts", Auth, getPosts);
 router.post("/", Auth, create);
 router.patch("/:id", Auth, update);
 router.delete("/:id", Auth, deletePost);
+router.post("/:id/reviews", Auth, comment);
 
 module.exports = router;

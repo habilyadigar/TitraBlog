@@ -57,10 +57,33 @@ const deletePost = async (req, res) => {
   }
 };
 
+const comment = async (req, res) => {
+  const postId = req.params.id;
+  const post = await Post.findById(postId);
+  if (post) {
+    if (post.reviews.find((x) => x.name === req.user.name)) {
+      return res.status(400).send({ message: "Daha önce yorum yaptınız!" });
+    }
+    const review = {
+      name: req.user.name,
+      comment: req.body.comment,
+    };
+    post.reviews.push(review);
+    const updatedPost = await post.save();
+    res.status(201).send({
+      message: "Review Adeed",
+      review: updatedPost.reviews[updatedPost.reviews.length - 1],
+    });
+  } else {
+    res.status(404).send({ message: "Product Doesn't exist" });
+  }
+};
+
 module.exports = {
   create,
   update,
   deletePost,
   postWithId,
   getPosts,
+  comment,
 };

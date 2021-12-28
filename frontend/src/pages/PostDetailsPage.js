@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchSinglePost, deletePost } from '../actions/postActions';
+import { fetchSinglePost, deletePost, createComment } from '../actions/postActions';
 import { useParams } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -9,6 +9,9 @@ import EditPostForm from '../components/EditPostForm';
 import Loader from '../components/Loader';
 import { Flex, Box, Image, chakra, Spacer, Link, Button, Heading, Text } from '@chakra-ui/react';
 import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
+import { COMMENT_POST_RESET } from '../constants/PostConstants';
+import { Alert, AlertIcon, AlertTitle, Tag } from '@chakra-ui/react';
+import { Textarea } from '@chakra-ui/react';
 
 const PostDetails = () => {
   const posts = useSelector(state => state.posts);
@@ -19,9 +22,19 @@ const PostDetails = () => {
   const { currentPost, loading, error } = posts;
   const [editMode, setEditMode] = useState(false);
   const { userInfo } = userLogin;
+
+  const addComment = useSelector(state => state.comment);
+  const { loading: loadingReviewCreate, error: errorReviewCreate, success: commentSuccess } = addComment;
+  const [comment, setComment] = useState('');
+
   useEffect(() => {
+    if (commentSuccess) {
+      window.alert('Comment created successfully!');
+      setComment('');
+      dispatch({ type: COMMENT_POST_RESET });
+    }
     dispatch(fetchSinglePost(id));
-  }, [dispatch, id]);
+  }, [dispatch, id, commentSuccess]);
 
   const openEditMode = () => {
     setEditMode(true);
@@ -33,6 +46,15 @@ const PostDetails = () => {
 
   const convertRelativeTime = date => {
     return moment(date).format('LL');
+  };
+
+  const submitHandler = e => {
+    e.preventDefault();
+    if (comment) {
+      dispatch(createComment(id, { comment, name: userInfo.name }));
+    } else {
+      alert('Please enter a comment!');
+    }
   };
 
   const removePost = () => {
@@ -125,6 +147,56 @@ const PostDetails = () => {
                     {currentPost?.content}
                   </Text>
                 </Box>
+                <div>
+                  <h2 id="reviews">Reviews</h2>
+                  <ul>
+                    <Box mt={6} w="100%" py={5}>
+                      {currentPost.reviews.map(review => (
+                        <li key={review._id}>
+                          <strong>{review.name}</strong>
+                          <p>{review.createdAt.substring(0, 10)}</p>
+                          <p>{review.comment}</p>
+                        </li>
+                      ))}
+                    </Box>
+                    <li>
+                      {userInfo ? (
+                        <form className="form" onSubmit={submitHandler}>
+                          <div>
+                            <Tag>Comment</Tag>
+                          </div>
+                          <div>
+                            <Textarea
+                              id="comment"
+                              value={comment}
+                              onChange={e => setComment(e.target.value)}
+                              placeholder="Enter your comment"
+                            />
+                          </div>
+                          <div>
+                            <label />
+                            <Button my={6} colorScheme="blue" type="submit">
+                              Send
+                            </Button>
+                            <div>
+                              {loadingReviewCreate && <Loader />}
+                              {errorReviewCreate && (
+                                <Alert status="error">
+                                  <AlertIcon />
+                                  <AlertTitle mr={2}>{errorReviewCreate}</AlertTitle>
+                                </Alert>
+                              )}
+                            </div>
+                          </div>
+                        </form>
+                      ) : (
+                        <h1>
+                          Yorum yapmak için lütfen <Link href="/login">Giriş</Link> yapın
+                        </h1>
+                      )}
+                    </li>
+                  </ul>
+                </div>
               </Box>
             </Flex>
           )}
