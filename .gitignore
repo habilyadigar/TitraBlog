@@ -184,3 +184,4 @@ frontend/yarn.lock
 backend/package-lock.json
 package-lock.json
 
+restClient.http

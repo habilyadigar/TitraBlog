@@ -1,24 +1,32 @@
-import logo from './logo.svg';
 import './App.css';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import PostsList from './components/PostsList';
+import PostDetails from './pages/PostDetailsPage';
+import Header from './components/Header';
+import Home from './pages/HomePage';
+import { Register } from './pages/RegisterPage';
+import { Login } from './pages/LoginPage';
+import ProfilePage from './pages/ProfilePage';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <ToastContainer autoClose={3000} />
+      <Router>
+        <Header />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/posts" component={PostsList} />
+          <Route exact path="/posts/:id" component={PostDetails} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/register" component={Register} />
+          <Route exact path="/profile" component={ProfilePage} />
+          <Redirect to="/" />
+        </Switch>
+      </Router>
+    </>
   );
 }
 
