@@ -47,9 +47,11 @@ const Header = () => {
             >
               Posts
             </Link>
-            <Button ml="10" className="header-post" colorScheme="teal" size="sm" onClick={onOpen}>
-              New Post
-            </Button>
+            {userInfo && (
+              <Button ml="10" className="header-post" colorScheme="teal" size="sm" onClick={onOpen}>
+                New Post
+              </Button>
+            )}
             {userInfo ? (
               <Menu>
                 <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>

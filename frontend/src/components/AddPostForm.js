@@ -20,7 +20,20 @@ import { FormControl, FormLabel } from '@chakra-ui/form-control';
 
 import { createPost } from '../actions/postActions';
 
-const categories = ['Frontend', 'Backend', 'Mobile', 'React', 'Vue', 'JavaScript', 'Fun', 'Gaming'];
+const categories = [
+  'Backend',
+  'Frontend',
+  'Mobile',
+  'React',
+  'IOT',
+  'JavaScript',
+  'AI',
+  'Gaming',
+  'Life',
+  'Crypto',
+  'NFT',
+  'Others',
+];
 
 const AddPostForm = ({ isOpen, onClose }) => {
   const [file, setFile] = useState(null);
@@ -82,22 +95,6 @@ const AddPostForm = ({ isOpen, onClose }) => {
                 })}
               />
               {errors.subtitle && <p className="validation__error">{errors.subtitle.message}</p>}
-            </FormControl>
-
-            <FormControl isInvalid={errors.author} minH={'100px'}>
-              <FormLabel>Author</FormLabel>
-              <Input
-                id="author"
-                label="Author"
-                name="author"
-                ref={register({
-                  required: {
-                    value: true,
-                    message: 'This field is required.',
-                  },
-                })}
-              />
-              {errors.author && <p className="validation__error">{errors.author.message}</p>}
             </FormControl>
 
             <FormControl minH={'100px'}>

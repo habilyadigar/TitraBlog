@@ -11,12 +11,17 @@ import { Flex, Box, Image, chakra, Spacer, Link, Button, Heading, Text } from '@
 import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
 
 const PostDetails = () => {
+  const posts = useSelector(state => state.posts);
+  const userLogin = useSelector(state => state.userLogin);
   const { id } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
-  const currentPosts = useSelector(state => state.posts);
-  const { currentPost, loading, error } = currentPosts;
+  const { currentPost, loading, error } = posts;
   const [editMode, setEditMode] = useState(false);
+  const { userInfo } = userLogin;
+  useEffect(() => {
+    dispatch(fetchSinglePost(id));
+  }, [dispatch, id]);
 
   const openEditMode = () => {
     setEditMode(true);
@@ -30,10 +35,6 @@ const PostDetails = () => {
     return moment(date).format('LL');
   };
 
-  useEffect(() => {
-    dispatch(fetchSinglePost(id));
-  }, [dispatch, id]);
-
   const removePost = () => {
     try {
       if (window.confirm(`Are you sure? You can't undo this action afterwards.`)) {
@@ -41,7 +42,7 @@ const PostDetails = () => {
         toast.success('Blog successfully removed!');
         setTimeout(() => {
           history.push('/posts');
-        }, 500);
+        }, 200);
       }
     } catch (error) {
       toast.error(error);
@@ -94,15 +95,18 @@ const PostDetails = () => {
                           </chakra.span>
                         </Flex>
                       </Flex>
-
                       <Spacer />
 
-                      <Button colorScheme="blue" mr={3} onClick={openEditMode}>
-                        <EditIcon />
-                      </Button>
-                      <Button onClick={removePost} colorScheme="red">
-                        <DeleteIcon />
-                      </Button>
+                      {userInfo?._id === currentPost?.user && (
+                        <>
+                          <Button colorScheme="blue" mr={3} onClick={openEditMode}>
+                            <EditIcon />
+                          </Button>
+                          <Button onClick={removePost} colorScheme="red">
+                            <DeleteIcon />
+                          </Button>
+                        </>
+                      )}
                     </Flex>
                   </Box>
 
@@ -110,7 +114,7 @@ const PostDetails = () => {
                     <Image
                       w="100%"
                       borderRadius="md"
-                      src={currentPost?.image || 'https://loremflickr.com/1280/720'}
+                      src={currentPost?.image || 'https://loremflickr.com/1920/1080'}
                       alt={currentPost?.tag}
                     />
                     <figcaption style={{ textAlign: 'center', color: '#afacac', fontSize: '0.9rem' }}>

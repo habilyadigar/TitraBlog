@@ -1,6 +1,7 @@
 const User = require("../models/userSchema");
 const bcrypt = require("bcrypt");
 const GenerateToken = require("../middleware/GenerateToken");
+const Post = require("../models/postSchema");
 
 const login = async (req, res) => {
   try {
@@ -50,6 +51,19 @@ const getUser = async (req, res) => {
   }
 };
 
+const getUserPosts = async (req, res) => {
+  console.log(req.user);
+  try {
+    const posts = await Post.find({
+      user: req.user._id,
+    });
+
+    res.status(200).send(posts);
+  } catch (error) {
+    res.status(404).send("User's posts not found");
+  }
+};
+
 const updateUser = async (req, res) => {
   const user = await User.findOne({
     where: { id: req.user.id },
@@ -72,4 +86,4 @@ const updateUser = async (req, res) => {
   }
 };
 
-module.exports = { login, register, getUser, updateUser };
+module.exports = { login, register, getUser, updateUser, getUserPosts };

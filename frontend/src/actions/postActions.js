@@ -15,8 +15,8 @@ export const fetchPosts = () => async dispatch => {
 };
 
 export const fetchSinglePost = id => async dispatch => {
+  dispatch({ type: types.FETCH_SINGLE_POST_REQUEST, payload: id });
   try {
-    dispatch({ type: types.FETCH_SINGLE_POST_REQUEST });
     const { data } = await api.fetchSinglePost(id);
     dispatch({ type: types.FETCH_SINGLE_POST_SUCCESS, payload: data });
   } catch (error) {
@@ -34,7 +34,6 @@ export const createPost = post => async (dispatch, getState) => {
     const { data } = await Axios.post(API_ENDPOINT, post, {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     });
-    console.log(data);
     dispatch({
       type: types.CREATE_POST_SUCCESS,
       payload: data,
@@ -47,10 +46,15 @@ export const createPost = post => async (dispatch, getState) => {
   }
 };
 
-export const updatePost = (id, post) => async dispatch => {
+export const updatePost = (id, post) => async (dispatch, getState) => {
   try {
+    const {
+      userLogin: { userInfo },
+    } = getState();
     dispatch({ type: types.UPDATE_POST_REQUEST });
-    const { data } = await api.updatePost(id, post);
+    const { data } = await Axios.patch(`${API_ENDPOINT}/${id}`, post, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
     dispatch({
       type: types.UPDATE_POST_SUCCESS,
       payload: data,
@@ -60,10 +64,15 @@ export const updatePost = (id, post) => async dispatch => {
   }
 };
 
-export const deletePost = id => async dispatch => {
+export const deletePost = id => async (dispatch, getState) => {
   try {
+    const {
+      userLogin: { userInfo },
+    } = getState();
     dispatch({ type: types.DELETE_POST_REQUEST });
-    const { data } = await api.deletePost(id);
+    const { data } = await Axios.delete(`${API_ENDPOINT}/${id}`, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
     dispatch({
       type: types.DELETE_POST_SUCCESS,
       payload: data._id,

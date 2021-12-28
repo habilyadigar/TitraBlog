@@ -1,22 +1,34 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 
-import { postReducer } from './reducers/postReducers';
+import {
+  /*
+  fetchSinglePostReducer,
+  fetchPostsReducer,
+  createPostReducer,
+  updatePostReducer,
+  deletePostReducer,*/
+  postReducer,
+} from './reducers/postReducers';
 import { userRegisterReducer, userLoginReducer, userDetailsReducer, userUpdateReducer } from './reducers/userReducers';
 
 const initialState = {
-  post: {
-    posts: [],
-    currentPost: null,
-  },
   userLogin: {
     userInfo: localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null,
   },
 };
 
 const rootReducer = combineReducers({
-  post: postReducer,
-  //user: userReducer,
+  //post
+  /*
+  getSinglePost: fetchSinglePostReducer,
+  getPosts: fetchPostsReducer,
+  createPost: createPostReducer,
+  updatePost: updatePostReducer,
+  deletePost: deletePostReducer,
+  */
+  posts: postReducer,
+  //user
   userRegister: userRegisterReducer,
   userLogin: userLoginReducer,
   userDetail: userDetailsReducer,

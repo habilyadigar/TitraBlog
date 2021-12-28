@@ -19,7 +19,15 @@ const postWithId = async (req, res) => {
 };
 
 const create = async (req, res) => {
-  const post = new Post(req.body);
+  const post = new Post({
+    title: req.body.title,
+    user: req.user._id,
+    author: req.user.name,
+    subtitle: req.body.subtitle,
+    content: req.body.content,
+    category: req.body.category,
+    image: req.body.image,
+  });
   try {
     await post.save();
     res.status(201).send(post);

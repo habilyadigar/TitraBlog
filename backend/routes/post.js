@@ -13,7 +13,7 @@ router.get("/", getPosts);
 router.get("/:id", postWithId);
 router.get("/myposts", Auth, getPosts);
 router.post("/", Auth, create);
-router.put("/:id", Auth, update);
+router.patch("/:id", Auth, update);
 router.delete("/:id", Auth, deletePost);
 
 module.exports = router;
