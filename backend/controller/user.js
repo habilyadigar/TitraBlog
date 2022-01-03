@@ -68,7 +68,7 @@ const updateUser = async (req, res) => {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
     if (req.body.password) {
-      user.password = bcrypt.hashSync(req.body.password, 8);
+      user.password = bcrypt.hashSync(req.body.password, 10);
     }
     const updatedUser = await user.save();
     res.send({

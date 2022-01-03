@@ -3,9 +3,9 @@ const Post = require("../models/postSchema");
 const getPosts = async (req, res) => {
   try {
     const posts = await Post.find();
-    res.send(200, posts);
+    res.status(200).send(posts);
   } catch (error) {
-    res.send(404, "Post Not Found");
+    res.status(404).send("Post Not Found");
   }
 };
 
@@ -19,20 +19,24 @@ const postWithId = async (req, res) => {
 };
 
 const create = async (req, res) => {
-  const post = new Post({
-    title: req.body.title,
-    user: req.user._id,
-    author: req.user.name,
-    subtitle: req.body.subtitle,
-    content: req.body.content,
-    category: req.body.category,
-    image: req.body.image,
-  });
-  try {
-    await post.save();
-    res.status(201).send(post);
-  } catch (error) {
-    res.status(400).send(error);
+  if (req.user) {
+    const post = new Post({
+      title: req.body.title,
+      user: req.user._id,
+      author: req.user.name,
+      subtitle: req.body.subtitle,
+      content: req.body.content,
+      category: req.body.category,
+      image: req.body.image,
+    });
+    try {
+      await post.save();
+      res.status(201).send(post);
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  } else {
+    res.status(400).send({ message: "User not found" });
   }
 };
 

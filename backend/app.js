@@ -1,3 +1,4 @@
+"use strict";
 var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
@@ -15,6 +16,7 @@ var postRouter = require("./routes/post");
 
 var app = express();
 
+app.disable("etag");
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");

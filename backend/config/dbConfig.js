@@ -1,15 +1,16 @@
 var mongoose = require("mongoose");
 require("dotenv").config();
 
-const URI = "mongodb://localhost:27017/titra";
-mongoose.connect(
-  process.env.MongoDB_URL || URI,
-  {
+const uri = process.env.MONGO_URI;
+//const URI = "mongodb://localhost:27017/titra";
+mongoose
+  .connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-  },
-  (err) => {
-    if (err) throw err;
-    console.log("Connected to MongoDB Successfully");
-  }
-);
+  })
+  .then(() => {
+    console.log("MongoDB Connected");
+  })
+  .catch((err) => {
+    console.log("DB can't connected: " + err);
+  });

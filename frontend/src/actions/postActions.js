@@ -32,7 +32,7 @@ export const createPost = post => async (dispatch, getState) => {
 
   try {
     const { data } = await Axios.post(API_ENDPOINT, post, {
-      headers: { Authorization: `Bearer ${userInfo.token}` },
+      headers: { Authorization: `Bearer ${userInfo?.token}` },
     });
     dispatch({
       type: types.CREATE_POST_SUCCESS,
@@ -53,7 +53,7 @@ export const updatePost = (id, post) => async (dispatch, getState) => {
     } = getState();
     dispatch({ type: types.UPDATE_POST_REQUEST });
     const { data } = await Axios.patch(`${API_ENDPOINT}/${id}`, post, {
-      headers: { Authorization: `Bearer ${userInfo.token}` },
+      headers: { Authorization: `Bearer ${userInfo?.token}` },
     });
     dispatch({
       type: types.UPDATE_POST_SUCCESS,
@@ -71,7 +71,7 @@ export const deletePost = id => async (dispatch, getState) => {
     } = getState();
     dispatch({ type: types.DELETE_POST_REQUEST });
     const { data } = await Axios.delete(`${API_ENDPOINT}/${id}`, {
-      headers: { Authorization: `Bearer ${userInfo.token}` },
+      headers: { Authorization: `Bearer ${userInfo?.token}` },
     });
     dispatch({
       type: types.DELETE_POST_SUCCESS,
@@ -90,7 +90,7 @@ export const createComment = (postId, review) => async (dispatch, getState) => {
 
   try {
     const { data } = await Axios.post(`${API_ENDPOINT}/${postId}/reviews`, review, {
-      headers: { Authorization: `Bearer ${userInfo.token}` },
+      headers: { Authorization: `Bearer ${userInfo?.token}` },
     });
     dispatch({
       type: types.COMMENT_POST_SUCCESS,

@@ -13,7 +13,6 @@ const verifyToken = (request, response, next) => {
   } else {
     try {
       const pureToken = token.slice(7, token.length);
-      request.user = jwt.verify(pureToken, process.env.TOKEN_KEY);
       jwt.verify(pureToken, process.env.TOKEN_KEY, (err, decode) => {
         if (err) {
           res.status(401).send({ message: "Invalid Token" });
